@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  back0:
+    
+    environment:
+      - env=dev
+    command: ["npm", "start"]
+  
+  front0:
+    
+    environment:
+      - env=dev
+   
+  
+  

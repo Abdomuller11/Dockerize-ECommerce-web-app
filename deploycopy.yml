@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  strategy: 
+    type: RollingUpdate
+  template:
+    metadata:
+     
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: back0
+        image: abdoemam/ecommerce_app:backend
+        ports:
+        - containerPort: 8000
+        command: ["npm", "run", "dev"]
+     
+      
+            
+      - name: front0
+        image: abdoemam/ecommerce_app:frontend
+        ports:
+        - containerPort: 3000
+        command: ["npm", "start"]
+       
+        
+             
+      volumes:
+      - name: back0-volume
+        persistentVolumeClaim:
+          claimName: backendpvc
+      - name: secret-volume
+        secret:
+          secretName: mysecret
+      - name: shared0
+        persistentVolumeClaim:
+          claimName: sharedpvc
+      - name: front0-volume
+        persistentVolumeClaim:
+          claimName: frontendpvc
+   
+      - name: shared1
+        persistentVolumeClaim:
+          claimName: sharedpvc
+  
+    
+    
+ 
+    

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-cm
+data:
+  redis-config: ""
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  admin: ZW1hbUBnbWFpbC5jb20K
+  pwd: ZW1hbTEyMzQ1Ngo=
+stringData:
+  username: oufa123@gmail.com
+  password: oufa123456
+

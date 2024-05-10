@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginxpv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/cloud0/nginx"
+  
+  claimRef:
+    name: nginxpvc
+    namespace: default
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: backendpv
+spec:
+  capacity:
+    storage: 6Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/cloud0/ecommerce_react_node-main/backend/src"
+  
+  claimRef:
+    name: backendpvc
+    namespace: default
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: frontendpv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/cloud0/ecommerce_react_node-main/frontend/src"
+  
+  claimRef:
+    name: frontendpvc
+    namespace: default
+
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sharedpv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/cloud0/shared"
+  
+  claimRef:
+    name: sharedpvc
+    namespace: default

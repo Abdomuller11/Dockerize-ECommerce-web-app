@@ -1,0 +1,64 @@
+version: '3'
+services:
+
+  back0:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    ports:
+      #- "8000-8003:8000"
+      - "8000:8000"
+    environment:
+      - whois=backend
+    env_file:
+      - ecommerce_react_node-main/backend/.env
+    volumes:
+      - ./ecommerce_react_node-main/backend/src:/app/src:ro
+      - backenddata:/backup
+    
+  
+  front0:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    ports:
+      #- "3000-3003:3000"
+      - "3000:3000"
+    environment:
+      - whois=frontend
+    env_file:
+      - ecommerce_react_node-main/frontend/.env
+    volumes:
+      - ./ecommerce_react_node-main/frontend/src:/app/src:ro
+    depends_on:
+      - back0
+      - redis
+    command: ["npm", "run","start"]
+  
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+   
+  ng0:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "8888:80"
+    environment:
+      - whois=nginx
+    
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - front0
+
+
+volumes:
+  backenddata:
+
+  

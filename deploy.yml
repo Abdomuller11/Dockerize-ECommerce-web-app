@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  strategy: 
+    type: RollingUpdate
+  template:
+    metadata:
+     
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: back0
+        image: abdoemam/ecommerce_app:backend
+        ports:
+        - containerPort: 8000
+        command: ["npm", "run", "dev"]
+        volumeMounts:
+        - name: back0-volume
+          mountPath: /app/src
+          readOnly: true
+        - name: secret-volume
+          mountPath: /secrets
+          readOnly: true
+        - name: shared
+          mountPath: /shared
+       
+      volumes:
+      - name: back0-volume
+        persistentVolumeClaim:
+          claimName: backendpvc
+      - name: secret-volume
+        secret:
+          secretName: mysecret
+      - name: shared
+        persistentVolumeClaim:
+          claimName: sharedpvc
+          
+ 
+    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  strategy: 
+    type: RollingUpdate
+  template:
+    metadata:
+     
+      labels:
+        app: frontend 
+    spec:
+      containers:
+      - name: front0
+        image: abdoemam/ecommerce_app:frontend
+        ports:
+        - containerPort: 3000
+        command: ["npm", "start"]
+        volumeMounts:
+        - name: front0-volume
+          mountPath: /app/src
+    
+        
+        - name: secret-volume
+          mountPath: /secrets
+          readOnly: true
+        - name: shared
+          mountPath: /shared
+        - name: test
+          mountPath: /cloud0/ecommerce_react_node-main/frontend/ 
+
+          
+
+          
+      volumes:
+      - name: front0-volume
+        persistentVolumeClaim:
+          claimName: frontendpvc
+      - name: secret-volume
+        secret:
+          secretName: mysecret      
+      - name: shared
+        persistentVolumeClaim:
+          claimName: sharedpvc
+      - name: test
+        hostPath:
+          path: /cloud0/ecommerce_react_node-main/frontend/
+    
+    

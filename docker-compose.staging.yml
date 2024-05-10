@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  back0:
+    
+    environment:
+      - env=staging
+    command: ["npm", "run","dev"]
+  
+  front0:
+    
+    environment:
+      - env=staging
+   
+  
+  
