@@ -4,3 +4,5 @@ A leading e-commerce company aims to develop an online shopping platform to prov
 Architecture • Simplified e-commerce platform divided into a collection of services. (at least 3 services) but here 4 services (frontend, backend, nginx, redis) • Services shall be designed to be independent, loosely coupled, and responsible for specific business functionalities such as user management, product catalog, cart management, order processing, and payment processing. • These services are independently deployable and communicate with each other through APIs (using lightweight protocols such as HTTP).
 
 **used Docker Hub repo :whale:: abdoemam/ecommerce_app:tag**
+
+######dont forget to read documentation  
